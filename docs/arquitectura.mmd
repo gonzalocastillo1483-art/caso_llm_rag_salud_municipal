@@ -1,0 +1,14 @@
+flowchart LR
+    U[Funcionario municipal] --> UI[Chat interno]
+    UI --> G1[Guardrail de entrada]
+    G1 --> R[Retriever BM25 o híbrido]
+    R --> V[(Base vectorial y documental)]
+    V --> R
+    R --> C[Constructor de contexto]
+    C --> L[LLM generador]
+    L --> G2[Verificador de evidencia y seguridad]
+    G2 --> A[Respuesta con citas]
+    G2 --> H[Escalamiento humano]
+    A --> LOG[(Auditoría anonimizada)]
+    H --> LOG
+
