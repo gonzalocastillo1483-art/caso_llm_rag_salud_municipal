@@ -1,6 +1,6 @@
 # Decisiones de diseño
 
-> Guía de estudio: este archivo reúne evidencia objetiva del prototipo. Los integrantes deben redactar en palabras propias la justificación técnica que presentarán y entregarán.
+> Guía de estudio: este archivo reúne evidencia objetiva del prototipo. El estudiante debe redactar en palabras propias la justificación técnica que presentará y entregará.
 
 ## Continuidad del caso
 
@@ -54,7 +54,7 @@ El modo local determinista permite evaluar el agente sin servicios externos. Si 
 | IE7 | Estado tipado, módulos separados y sanitización previa. |
 | IE8 | Demo, pruebas y evidencias reproducibles. |
 | IE9 | Informe, diagramas, README y referencias. |
-| IE10 | Código, documentación y responsabilidades separadas para defensa. |
+| IE10 | Código y documentación organizados para la defensa individual. |
 
-> Nota académica: las decisiones y conclusiones deben ser revisadas y explicadas con palabras propias por los integrantes antes de entregar.
+> Nota académica: las decisiones y conclusiones deben ser revisadas y explicadas con palabras propias por el estudiante antes de entregar.
 
