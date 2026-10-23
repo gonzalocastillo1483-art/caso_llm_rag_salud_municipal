@@ -56,5 +56,7 @@ El modo local determinista permite evaluar el agente sin servicios externos. Si 
 | IE9 | Informe, diagramas, README y referencias. |
 | IE10 | Código y documentación organizados para la defensa individual. |
 
-> Nota académica: las decisiones y conclusiones deben ser revisadas y explicadas con palabras propias por el estudiante antes de entregar.
+## Conclusión
+
+El proyecto permitió transformar la propuesta RAG de la EP1 en un agente funcional capaz de consultar protocolos, planificar según el riesgo, usar herramientas, conservar memoria y registrar trazabilidad. Su funcionamiento se verificó con una demo reproducible y nueve pruebas automatizadas aprobadas. El principal aporte es que, ante falta de evidencia o una posible urgencia, el sistema deriva la atención a una persona. La principal limitación es el tamaño simulado de la base documental y el uso de reglas de demostración. Como siguiente mejora se propone incorporar documentos institucionales validados, evaluación con usuarios y controles de seguridad para realizar un piloto real.
 
