@@ -64,7 +64,7 @@ Escriba `salir` para terminar.
 python -m unittest discover -s tests -v
 ```
 
-Resultado esperado: `Ran 6 tests` y `OK`. Las pruebas cubren recuperación de fuentes, adaptación ante urgencia y contingencia, sanitización y memoria de corto y largo plazo.
+Resultado esperado en el repositorio completo: `Ran 9 tests` y `OK`. Son seis pruebas nuevas de la EP2 más tres pruebas de regresión conservadas de la EP1; cubren recuperación de fuentes, adaptación ante urgencia y contingencia, sanitización y memoria de corto y largo plazo.
 
 ## OpenAI opcional
 

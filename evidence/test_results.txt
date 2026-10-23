@@ -7,7 +7,10 @@ test_long_term_memory_recovers_previous_case ... ok
 test_operational_outage_uses_contingency_route ... ok
 test_personal_data_is_removed_before_persistence ... ok
 test_short_term_memory_preserves_previous_turn ... ok
+test_emergency_is_blocked_before_retrieval ... ok
+test_personal_data_is_redacted ... ok
+test_retrieves_pharmacy_information ... ok
 
-Ran 6 tests in 0.112s
+Ran 9 tests in 0.091s
 OK
 
