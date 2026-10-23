@@ -1,5 +1,5 @@
-# La demo principal usa solo biblioteca estándar de Python.
-# Dependencias opcionales para una versión API:
-# fastapi
-# uvicorn
+langgraph==1.0.10
+langchain-core==1.7.0
+langchain-openai==1.7.2
+scikit-learn==1.9.1
 

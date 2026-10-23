@@ -1,0 +1,15 @@
+[project]
+name = "salud-agent-ep2"
+version = "1.0.0"
+description = "Agente funcional para continuidad operativa en atencion primaria municipal"
+requires-python = ">=3.10"
+dependencies = [
+  "langgraph==1.0.10",
+  "langchain-core==1.7.0",
+  "langchain-openai==1.7.2",
+  "scikit-learn==1.9.1",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+

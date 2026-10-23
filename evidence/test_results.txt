@@ -1,0 +1,13 @@
+Comando: python -m unittest discover -s tests -v
+Fecha de verificación: 2026-10-23
+
+test_consultation_uses_sources ... ok
+test_emergency_changes_plan_and_escalates ... ok
+test_long_term_memory_recovers_previous_case ... ok
+test_operational_outage_uses_contingency_route ... ok
+test_personal_data_is_removed_before_persistence ... ok
+test_short_term_memory_preserves_previous_turn ... ok
+
+Ran 6 tests in 0.112s
+OK
+

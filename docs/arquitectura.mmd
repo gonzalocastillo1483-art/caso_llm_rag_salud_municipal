@@ -1,14 +1,15 @@
 flowchart LR
-    U[Funcionario municipal] --> UI[Chat interno]
-    UI --> G1[Guardrail de entrada]
-    G1 --> R[Retriever BM25 o híbrido]
-    R --> V[(Base vectorial y documental)]
-    V --> R
-    R --> C[Constructor de contexto]
-    C --> L[LLM generador]
-    L --> G2[Verificador de evidencia y seguridad]
-    G2 --> A[Respuesta con citas]
-    G2 --> H[Escalamiento humano]
-    A --> LOG[(Auditoría anonimizada)]
-    H --> LOG
+    U[Funcionario] --> I[Intake: sanitizar y clasificar]
+    I --> P[Planificador adaptativo]
+    P -->|Emergencia| E[Escalamiento humano]
+    P -->|Administrativa / sensible / contingencia| R[Recuperación semántica]
+    STM[(Memoria corta)] --> R
+    LTM[(SQLite: memoria larga)] --> R
+    KB[(Protocolos Markdown)] --> R
+    R --> D{¿Evidencia suficiente?}
+    D -->|Sí| G[Generar respuesta con fuentes]
+    D -->|No| E
+    G --> A[Registro auditable JSONL]
+    E --> A
+    A --> LTM
 

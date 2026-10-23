@@ -1,0 +1,15 @@
+stateDiagram-v2
+    [*] --> Administrativa: consulta habitual
+    [*] --> Sensible: datos o ficha clínica
+    [*] --> Contingencia: sistema caído
+    [*] --> Emergencia: signos de urgencia
+    Administrativa --> Recuperar: plan estándar
+    Sensible --> Recuperar: agrega verificación de privacidad
+    Contingencia --> Recuperar: prioriza protocolo manual
+    Emergencia --> Escalar: omite respuesta automática
+    Recuperar --> Responder: evidencia >= umbral
+    Recuperar --> Escalar: evidencia insuficiente
+    Responder --> Registrar
+    Escalar --> Registrar
+    Registrar --> [*]
+

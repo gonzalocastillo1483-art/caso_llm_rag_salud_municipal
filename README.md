@@ -1,55 +1,121 @@
-# Asistente RAG para atención primaria municipal
+# Agente funcional para salud municipal - EP2
 
-Caso propuesto para la Evaluación Parcial N°1: diseño de una solución con LLM, agentes inteligentes y RAG para una red de centros de salud familiar municipal.
+Continuación del caso de atención primaria municipal de la EP1. El prototipo orienta a funcionarios en consultas administrativas, recupera protocolos locales, conserva contexto, registra decisiones y cambia su plan ante urgencias, datos sensibles o caídas del sistema.
 
-## Resumen del caso
+## Capacidades evaluadas
 
-La Dirección de Salud Municipal de una comuna ficticia llamada Santa Isabel administra tres CESFAM, un SAPU y una unidad de atención telefónica. El personal administrativo responde consultas repetitivas sobre toma de horas, derivaciones, farmacia, derechos de pacientes y continuidad de atención. La información está distribuida en protocolos PDF, circulares internas, planillas y mensajes enviados por correo. Esto genera respuestas inconsistentes, demoras y riesgo de entregar orientación clínica sin respaldo.
+- Orquestación explícita con `LangGraph`.
+- Consulta semántica de documentos con TF-IDF y similitud coseno.
+- Herramientas de consulta, escritura de registros y escalamiento humano.
+- Memoria de corto plazo por conversación y memoria de largo plazo en SQLite.
+- Planificación adaptativa para rutas administrativa, sensible, contingencia y emergencia.
+- Respuestas con fuentes, sanitización de datos personales y trazabilidad.
+- Funcionamiento local sin API key; uso opcional de OpenAI si se configura una clave.
 
-La solución propuesta es un asistente interno basado en LLM y RAG. El asistente recupera evidencia desde una base documental controlada, redacta respuestas con citas, bloquea consultas clínicas peligrosas y deriva a un funcionario humano cuando la pregunta no tiene respaldo suficiente.
+## Requisitos
 
-## Qué incluye este repositorio
+- Python 3.10 o superior.
+- Windows, macOS o Linux.
+- No se requiere API key para ejecutar la demostración evaluada.
 
-- `src/salud_rag`: implementación autocontenida del pipeline RAG.
-- `data/source_documents`: documentos de ejemplo que simulan fuentes internas.
-- `prompts`: prompts optimizados y separados por rol.
-- `docs`: informe en Markdown, arquitectura y casos de prueba.
-- `tests`: pruebas unitarias básicas para recuperación y guardrails.
-
-## Ejecución rápida
-
-No requiere servicios externos ni llaves de API.
-
-```powershell
-cd outputs/caso_llm_rag_salud_municipal
-python -m src.salud_rag.demo
-```
-
-Para correr pruebas:
+## Instalación en Windows
 
 ```powershell
-python -m unittest discover -s tests
+git clone https://github.com/gonzalocastillo1483-art/caso_llm_rag_salud_municipal.git
+cd caso_llm_rag_salud_municipal
+py -3 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
 ```
 
-## Preguntas de demostración
+Si PowerShell bloquea la activación, se puede ejecutar directamente:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+## Ejecutar la demo
+
+Con el entorno activado:
+
+```powershell
+python -m src.salud_agent.demo
+```
+
+Sin activar el entorno:
+
+```powershell
+.\.venv\Scripts\python.exe -m src.salud_agent.demo
+```
+
+La demo recorre cinco casos: cambio de hora, caída del sistema, privacidad de ficha clínica, urgencia y una consulta de seguimiento que usa memoria.
+
+## Conversación interactiva
+
+```powershell
+python -m src.salud_agent.cli
+```
+
+Escriba `salir` para terminar.
+
+## Pruebas
+
+```powershell
+python -m unittest discover -s tests -v
+```
+
+Resultado esperado: `Ran 6 tests` y `OK`. Las pruebas cubren recuperación de fuentes, adaptación ante urgencia y contingencia, sanitización y memoria de corto y largo plazo.
+
+## OpenAI opcional
+
+El modo predeterminado usa un generador local determinista para que la evaluación sea reproducible. Para activar generación con un LLM:
+
+```powershell
+$env:OPENAI_API_KEY="su_clave"
+$env:OPENAI_MODEL="gpt-4o-mini"
+python -m src.salud_agent.demo
+```
+
+## Flujo del agente
 
 ```text
-¿Qué debe responder el call center si una persona pide cambiar una hora de morbilidad?
-¿Cómo se informa el retiro de medicamentos crónicos?
-Un paciente dice que tiene dolor de pecho y falta de aire, ¿qué hago?
-¿Puedo entregar la ficha clínica de una persona a su vecino?
+Consulta -> sanitizar/clasificar -> plan adaptativo
+                |                       |
+                | emergencia            | resto
+                v                       v
+          escalamiento humano     recuperar contexto
+                                        |
+                                  evaluar evidencia
+                                   /            \
+                             suficiente      insuficiente
+                                 |                 |
+                              responder       escalar
+                                   \            /
+                                    registrar
 ```
 
-## Decisiones técnicas principales
+El detalle editable se encuentra en [`docs/arquitectura.mmd`](docs/arquitectura.mmd).
 
-- Recuperación local con BM25 para que la demo funcione sin infraestructura externa.
-- Chunking por secciones para conservar trazabilidad.
-- Guardrails antes y después de recuperar evidencia.
-- Respuestas con fuentes obligatorias.
-- Separación entre documentos, recuperación, prompts, generación y auditoría.
-- Diseño preparado para cambiar el generador determinístico por un LLM real.
+## Estructura
 
-## Alcance de la demo
+```text
+src/salud_agent/       agente, memoria, planificación, herramientas y guardrails
+data/source_documents/ protocolos simulados del caso
+tests/                 pruebas automatizadas
+docs/                  arquitectura, decisiones, casos y guía de exposición
+prompts/                prompts optimizados
+evidence/              resultados verificados
+runtime/               memoria y registros creados al ejecutar (ignorado por Git)
+```
 
-La demo no diagnostica, no entrega indicaciones clínicas personalizadas y no procesa fichas clínicas reales. Usa documentos ficticios para demostrar el flujo técnico. En una implementación productiva se reemplazaría el motor BM25 por búsqueda híbrida, se integraría un modelo LLM aprobado por la institución y se conectaría un repositorio documental con control de versiones.
+## Alcance y seguridad
+
+El agente no diagnostica, no prioriza clínicamente y no reemplaza a profesionales. Sanitiza RUT, correos y teléfonos antes de persistir; escala urgencias, ambigüedad y falta de evidencia; y registra fuentes y decisiones. Los documentos incluidos son simulados para fines académicos.
+
+## Documentación de entrega
+
+- [`docs/decisiones_diseno.md`](docs/decisiones_diseno.md): decisiones técnicas y limitaciones.
+- [`docs/casos_prueba.md`](docs/casos_prueba.md): escenarios de demostración.
+- [`docs/guion_presentacion.md`](docs/guion_presentacion.md): guion breve para la defensa.
+- [`docs/uso_ia.md`](docs/uso_ia.md): declaración de uso responsable de IA.
 

@@ -1,10 +1,22 @@
-# Casos de prueba sugeridos
+# Casos de prueba y demostración
 
-| ID | Pregunta | Resultado esperado |
-| --- | --- | --- |
-| CP01 | ¿Qué debe responder el call center si una persona pide cambiar una hora de morbilidad? | Responde con pasos de agenda, anulación de hora previa y solicitud pendiente si no hay cupo. |
-| CP02 | ¿Cómo se informa el retiro de medicamentos crónicos? | Cita farmacia, identificación, retiro por tercero y receta vigente. |
-| CP03 | Un paciente tiene dolor de pecho y falta de aire, ¿qué hago? | Bloquea respuesta automática y deriva a urgencia, SAPU o 131. |
-| CP04 | ¿Puedo entregar la ficha clínica de una persona a su vecino? | Niega entrega a tercero no autorizado y cita confidencialidad. |
-| CP05 | ¿Cuál es el horario exacto de oftalmología el próximo mes? | Deriva por falta de evidencia si el documento no contiene horario. |
+| Caso | Entrada | Resultado esperado |
+|---|---|---|
+| Consulta normal | ¿Cómo retiro medicamentos crónicos? | Respuesta administrativa con fuentes de farmacia. |
+| Contingencia | El sistema está caído y no puedo agendar. | Ruta `contingencia`, plan manual y registro del incidente. |
+| Privacidad | Mi RUT es 12.345.678-9. ¿Puede un vecino retirar mi ficha? | RUT anonimizado, verificación de autorización y eventual derivación. |
+| Emergencia | Tengo dolor de pecho y falta de aire. | Ruta `emergencia`, sin respuesta clínica automática y escalamiento. |
+| Memoria corta | ¿Cómo cambio una hora? / ¿Qué registro después? | Segunda respuesta utiliza el turno anterior. |
+| Memoria larga | Consulta sobre medicamentos en otro hilo. | Recuperación de un resumen persistido relacionado. |
+| Sin evidencia | Pregunta fuera de los protocolos. | Acción `escalar_sin_evidencia`. |
+
+## Evidencia automatizada
+
+Ejecutar:
+
+```powershell
+python -m unittest discover -s tests -v
+```
+
+La salida verificada se conserva en `evidence/test_results.txt`.
 

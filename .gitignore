@@ -1,11 +1,10 @@
 __pycache__/
 *.py[cod]
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
 .venv/
-venv/
-*.log
-*.tmp
-*.zip
+runtime/
+.env
+.pytest_cache/
+*.docx
+*.pdf
+*.pptx
 
